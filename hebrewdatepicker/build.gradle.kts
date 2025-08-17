@@ -47,7 +47,7 @@ afterEvaluate {
 }
 
 dependencies {
-    implementation(libs.zmanim)
+    api(libs.zmanim)
     implementation(libs.appcompat)
     implementation(libs.material)
     testImplementation(libs.junit)

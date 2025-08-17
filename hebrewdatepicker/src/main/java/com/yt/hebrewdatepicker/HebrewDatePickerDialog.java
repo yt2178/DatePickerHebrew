@@ -110,9 +110,9 @@ public class HebrewDatePickerDialog extends DialogFragment implements CalendarAd
     }
 
     /**
-     * Creates an ordered list of month constants for a given Hebrew year.
-     * @param year The Hebrew year.
-     * @return A List of integers representing the months in their correct sequence.
+     * יוצר רשימה מסודרת של קבועי חודש לשנה עברית נתונה.
+     * @param year השנה העברית.
+     * @return רשימה של מספרים שלמים המייצגים את החודשים ברצף הנכון שלהם.
      */
     private List<Integer> getMonthListForYear(int year) {
         JewishCalendar tempCal = new JewishCalendar(year, JewishCalendar.TISHREI, 1);
@@ -134,8 +134,8 @@ public class HebrewDatePickerDialog extends DialogFragment implements CalendarAd
     }
 
     /**
-     * Changes the displayed month using a robust, list-based approach to handle all edge cases.
-     * @param monthDifference -1 for previous, 1 for next.
+     * משנה את החודש המוצג באמצעות גישה חזקה ומבוססת על רשימה לטיפול בכל מקרי הקצה.
+     * @param monthDifference -1 לקודם, 1 למשך הבא.
      */
     private void changeMonth(int monthDifference) {
         int currentYear = displayedMonth.getJewishYear();
@@ -148,14 +148,14 @@ public class HebrewDatePickerDialog extends DialogFragment implements CalendarAd
         int newYear = currentYear;
         int newMonth;
 
-        if (newIndex < 0) { // Moved to the previous year
+        if (newIndex < 0) { // עבר לשנה הקודמת
             newYear--;
             List<Integer> prevYearMonthList = getMonthListForYear(newYear);
-            newMonth = prevYearMonthList.get(prevYearMonthList.size() - 1); // Last month of previous year
-        } else if (newIndex >= monthList.size()) { // Moved to the next year
+            newMonth = prevYearMonthList.get(prevYearMonthList.size() - 1); // בחודש שעברה בשנה הקודמת
+        } else if (newIndex >= monthList.size()) { // עבר לשנה הבאה
             newYear++;
-            newMonth = JewishCalendar.TISHREI; // First month of next year
-        } else { // Moved within the same year
+            newMonth = JewishCalendar.TISHREI; // החודש הראשון לשנה הבאה
+        } else { //עבר באותה שנה
             newMonth = monthList.get(newIndex);
         }
 
@@ -164,15 +164,15 @@ public class HebrewDatePickerDialog extends DialogFragment implements CalendarAd
     }
 
     /**
-     * Changes the displayed year, ensuring month validity (e.g., Adar II).
-     * @param yearDifference -1 for previous, 1 for next.
+     * משנה את השנה המוצגת, תוך הבטחת תוקף חודש (למשל, ADAR II).
+     * @param yearDifference -1 לקודם, 1 למשך הבא.
      */
     private void changeYear(int yearDifference) {
         int newYear = displayedMonth.getJewishYear() + yearDifference;
         int currentMonth = displayedMonth.getJewishMonth();
 
-        // If the current month is Adar II and the target year is not a leap year,
-        // fall back to the regular Adar.
+        // אם החודש הנוכחי הוא ADAR II ושנת היעד אינה שנה מעוברת,
+        // נפל חזרה לאדר הרגיל.
         if (currentMonth == JewishCalendar.ADAR_II) {
             JewishCalendar tempCal = new JewishCalendar(newYear, JewishCalendar.TISHREI, 1);
             if (!tempCal.isJewishLeapYear()) {
