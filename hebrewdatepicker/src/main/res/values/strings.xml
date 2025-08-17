@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prev_year">שנה קודמת</string>
+    <string name="next_year">שנה הבאה</string>
+    <string name="prev_month">חודש קודם</string>
+    <string name="next_month">חודש הבא</string>
+</resources>

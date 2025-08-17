@@ -6,7 +6,6 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <!-- Year Navigation Header -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,7 +21,7 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/outline_keyboard_double_arrow_left_24"
             app:tint="?attr/colorPrimary"
-            android:contentDescription="שנה קודמת"/>
+            android:contentDescription="@string/prev_year"/>
 
         <TextView
             android:id="@+id/tv_year"
@@ -42,7 +41,7 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/outline_keyboard_double_arrow_right_24"
             app:tint="?attr/colorPrimary"
-            android:contentDescription="שנה הבאה"/>
+            android:contentDescription="@string/next_year"/>
     </RelativeLayout>
 
     <!-- Month Navigation and Calendar Grid in a Card -->
@@ -74,7 +73,7 @@
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/outline_keyboard_arrow_left_24"
                     app:tint="?attr/colorOnPrimaryContainer"
-                    android:contentDescription="חודש קודם"/>
+                    android:contentDescription="@string/prev_month"/>
 
                 <TextView
                     android:id="@+id/tv_month"
@@ -94,7 +93,7 @@
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/outline_keyboard_arrow_right_24"
                     app:tint="?attr/colorOnPrimaryContainer"
-                    android:contentDescription="חודש הבא"/>
+                    android:contentDescription="@string/next_month"/>
             </RelativeLayout>
 
             <!-- Day of the Week Labels (Styled) -->
