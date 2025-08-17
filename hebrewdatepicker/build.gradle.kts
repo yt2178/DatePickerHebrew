@@ -39,7 +39,6 @@ afterEvaluate {
                 groupId = "com.github.yt2178"
                 artifactId = "DatePickerHebrew"
                 version = "1.0.2"
-
                 from(components.findByName("release"))
             }
         }
