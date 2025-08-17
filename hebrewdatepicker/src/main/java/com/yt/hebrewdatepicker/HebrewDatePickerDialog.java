@@ -19,10 +19,9 @@ import java.util.List;
 public class HebrewDatePickerDialog extends DialogFragment implements CalendarAdapter.OnItemListener {
 
     public interface OnDateSetListener {
-        void onDateSet(int year, int month, int day);
+        void onDateSet(JewishCalendar selectedDate, String formattedDate);
     }
     private OnDateSetListener listener;
-
     private JewishCalendar selectedDate;
     private JewishCalendar displayedMonth;
 
@@ -68,11 +67,11 @@ public class HebrewDatePickerDialog extends DialogFragment implements CalendarAd
         builder.setView(view)
                 .setPositiveButton("אישור", (dialog, id) -> {
                     if (listener != null) {
-                        listener.onDateSet(
-                                selectedDate.getJewishYear(),
-                                selectedDate.getJewishMonth(),
-                                selectedDate.getJewishDayOfMonth()
-                        );
+                        com.kosherjava.zmanim.hebrewcalendar.HebrewDateFormatter libraryFormatter =
+                                new com.kosherjava.zmanim.hebrewcalendar.HebrewDateFormatter();
+                        libraryFormatter.setHebrewFormat(true);
+                        String formattedDate = libraryFormatter.format(selectedDate);
+                        listener.onDateSet(selectedDate, formattedDate);
                     }
                 })
                 .setNegativeButton("ביטול", null);
