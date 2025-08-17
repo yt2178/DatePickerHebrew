@@ -7,8 +7,11 @@
 
 A simple and modern Hebrew Date Picker dialog for Android applications, built with Material Design principles. The library provides a calendar-style view that is intuitive and easy to integrate.
 
-![HebrewDatePicker Screenshot](https://github.com/yt2178/DatePickerHebrew/blob/master/screenshot.png)
-<img width="480" height="854" alt="image" src="https://github.com/user-attachments/assets/33bf8ad4-7834-41c1-89d4-f4064465108f" />
+![HebrewDatePicker Screenshot](https://github.com/user-attachments/assets/7c99aeed-c33a-4113-8f88-9d65d6bbd6bc)![HebrewDatePicker Screenshot](https://github.com/yt2178/DatePickerHebrew/blob/master/screenshot.png)
+
+
+
+
 
 
 ## Features
