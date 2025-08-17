@@ -60,13 +60,8 @@ public class MainActivity extends AppCompatActivity implements HebrewDatePickerD
         textViewSunset.setText("שקיעה: " + sunset);
     }
 
-    // יישם את שיטת ה- OndateSet החדשה, המקבלת יהודית כניסה ומחרוזת
     @Override
     public void onDateSet(JewishCalendar selectedDate, String formattedDate) {
-     // הספרייה כבר עשתה את העיצוב עבורנו!
-        // אנו יכולים פשוט להציג את המחרוזת ישירות.
         textViewSelectedDate.setText("נבחר: " + formattedDate);
-
-       // יש לנו גם את האובייקט 'שנבחר לתאריך' אם אנו זקוקים לו לחישובים אחרים.
     }
 }
