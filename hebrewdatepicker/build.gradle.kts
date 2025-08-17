@@ -38,7 +38,7 @@ afterEvaluate {
             create<MavenPublication>("release") {
                 groupId = "com.github.yt2178"
                 artifactId = "DatePickerHebrew"
-                version = "1.0.0"
+                version = "1.0.1"
 
                 from(components.findByName("release"))
             }
