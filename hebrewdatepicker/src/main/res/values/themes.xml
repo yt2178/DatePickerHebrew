@@ -8,6 +8,31 @@
     <style name="NumberPickerTextColorStyle">
         <item name="android:textColorPrimary">@color/black</item>
     </style>
+    <style name="DayOfWeekLabel" parent="Widget.AppCompat.TextView">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAppearance">?attr/textAppearanceBodyLarge</item>
+        <item name="android:textStyle">bold</item>
+        <!-- Use a more prominent but still secondary color -->
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:alpha">0.87</item> <!-- Make it stand out -->
+    </style>
+    <style name="DayOfWeekHeader">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@android:color/darker_gray</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAppearance">?attr/textAppearanceCaption</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 
+    <style name="DayOfWeekLabel.Shabbat">
+
+        <item name="android:textColor">?attr/colorPrimary</item>
+    </style>
     <style name="Theme.Hebrew" parent="Base.Theme.Hebrew" />
 </resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- State when the day is selected -->
+    <item android:state_selected="true">
+        <shape android:shape="oval">
+            <solid android:color="?attr/colorPrimary"/>
+        </shape>
+    </item>
+    <!-- Default state -->
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="@android:color/transparent"/>
+        </shape>
+    </item>
+</selector>

@@ -4,21 +4,33 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.NumberPicker;
+import android.widget.ImageView;
+import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
-import com.kosherjava.zmanim.hebrewcalendar.HebrewDateFormatter;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.kosherjava.zmanim.hebrewcalendar.JewishCalendar;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-public class HebrewDatePickerDialog extends DialogFragment {
-
-    private OnDateSetListener listener;
-    private JewishCalendar jewishCalendar;
+public class HebrewDatePickerDialog extends DialogFragment implements CalendarAdapter.OnItemListener {
 
     public interface OnDateSetListener {
         void onDateSet(int year, int month, int day);
     }
+    private OnDateSetListener listener;
+
+    private JewishCalendar selectedDate;
+    private JewishCalendar displayedMonth;
+
+    private int startDayOffset;
+
+    private TextView yearText, monthText;
+    private RecyclerView calendarRecyclerView;
+    private CalendarAdapter adapter;
 
     public void setOnDateSetListener(OnDateSetListener listener) {
         this.listener = listener;
@@ -27,99 +39,168 @@ public class HebrewDatePickerDialog extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.dialog_hebrew_picker, null);
+        View view = inflater.inflate(R.layout.dialog_hebrew_calendar, null);
 
-        NumberPicker yearPicker = view.findViewById(R.id.pickerYear);
-        NumberPicker monthPicker = view.findViewById(R.id.pickerMonth);
-        NumberPicker dayPicker = view.findViewById(R.id.pickerDay);
+        yearText = view.findViewById(R.id.tv_year);
+        monthText = view.findViewById(R.id.tv_month);
+        calendarRecyclerView = view.findViewById(R.id.calendar_recycler_view);
 
-        HebrewDateFormatter libraryFormatter = new HebrewDateFormatter();
-        libraryFormatter.setHebrewFormat(true);
+        ImageView prevYearButton = view.findViewById(R.id.btn_prev_year);
+        ImageView nextYearButton = view.findViewById(R.id.btn_next_year);
+        ImageView prevMonthButton = view.findViewById(R.id.btn_prev_month);
+        ImageView nextMonthButton = view.findViewById(R.id.btn_next_month);
 
-        // --- התיקון הסופי והפשוט לשנים ---
-        // This is the new, simpler, and correct way to format the year.
-        yearPicker.setFormatter(value -> {
-            if (value < 3761) return String.valueOf(value); // Safety check
-            // For a valid year, display "ה'" plus the Gematria of the last 3 digits.
-            return "ה'" + libraryFormatter.formatHebrewNumber(value % 1000);
-        });
-        // This one was already working correctly
-        dayPicker.setFormatter(libraryFormatter::formatHebrewNumber);
-        // ------------------------------------
+        selectedDate = new JewishCalendar();
+        displayedMonth = (JewishCalendar) selectedDate.clone();
+        displayedMonth.setJewishDayOfMonth(1);
 
-        jewishCalendar = new JewishCalendar();
+        calendarRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 7));
+        adapter = new CalendarAdapter(new ArrayList<>(), this);
+        calendarRecyclerView.setAdapter(adapter);
 
-        int currentYear = jewishCalendar.getJewishYear();
-        yearPicker.setMinValue(currentYear - 100);
-        yearPicker.setMaxValue(currentYear + 100);
-        yearPicker.setValue(currentYear);
-        yearPicker.setWrapSelectorWheel(false);
-
-        updateMonthPicker(monthPicker, dayPicker, currentYear);
-        monthPicker.setValue(jewishCalendar.getJewishMonth() - 1);
-        dayPicker.setValue(jewishCalendar.getJewishDayOfMonth());
-
-        yearPicker.setOnValueChangedListener((picker, oldVal, newVal) -> {
-            updateMonthPicker(monthPicker, dayPicker, newVal);
-        });
-
-        monthPicker.setOnValueChangedListener((picker, oldVal, newVal) -> {
-            updateDayPicker(dayPicker, yearPicker.getValue(), newVal + 1);
-        });
+        prevYearButton.setOnClickListener(v -> changeYear(-1));
+        nextYearButton.setOnClickListener(v -> changeYear(1));
+        prevMonthButton.setOnClickListener(v -> changeMonth(-1));
+        nextMonthButton.setOnClickListener(v -> changeMonth(1));
 
         builder.setView(view)
-                .setTitle("בחר תאריך עברי")
                 .setPositiveButton("אישור", (dialog, id) -> {
                     if (listener != null) {
-                        int year = yearPicker.getValue();
-                        int month = monthPicker.getValue() + 1;
-                        int day = dayPicker.getValue();
-                        listener.onDateSet(year, month, day);
+                        listener.onDateSet(
+                                selectedDate.getJewishYear(),
+                                selectedDate.getJewishMonth(),
+                                selectedDate.getJewishDayOfMonth()
+                        );
                     }
                 })
-                .setNegativeButton("ביטול", (dialog, id) -> HebrewDatePickerDialog.this.getDialog().cancel());
+                .setNegativeButton("ביטול", null);
 
+        updateCalendar();
         return builder.create();
     }
 
-    private void updateMonthPicker(NumberPicker monthPicker, NumberPicker dayPicker, int year) {
-        HebrewDateFormatter hdf = new HebrewDateFormatter();
-        hdf.setHebrewFormat(true);
+    private void updateCalendar() {
+        yearText.setText("ה'" + HebrewDateFormatter.toGematria(displayedMonth.getJewishYear()));
+        monthText.setText(HebrewDateFormatter.formatMonth(displayedMonth));
 
-        JewishCalendar tempCalForLeapYear = new JewishCalendar(year, 1, 1);
-        boolean isLeapYear = tempCalForLeapYear.isJewishLeapYear();
+        ArrayList<String> days = new ArrayList<>();
+        JewishCalendar temp = (JewishCalendar) displayedMonth.clone();
+        temp.setJewishDayOfMonth(1);
 
-        int maxMonth = isLeapYear ? 13 : 12;
+        startDayOffset = temp.getDayOfWeek() - 1;
 
-        String[] monthNames = new String[maxMonth];
-        for (int i = 0; i < maxMonth; i++) {
-            monthNames[i] = hdf.formatMonth(new JewishCalendar(year, i + 1, 1));
+        for (int i = 0; i < startDayOffset; i++) {
+            days.add("");
         }
 
-        monthPicker.setDisplayedValues(null);
-        monthPicker.setMinValue(0);
-        monthPicker.setMaxValue(maxMonth - 1);
-        monthPicker.setDisplayedValues(monthNames);
-
-        if (monthPicker.getValue() >= maxMonth) {
-            monthPicker.setValue(maxMonth - 1);
+        for (int d = 1; d <= displayedMonth.getDaysInJewishMonth(); d++) {
+            days.add(HebrewDateFormatter.toGematria(d));
         }
 
-        updateDayPicker(dayPicker, year, monthPicker.getValue() + 1);
+        adapter.updateDays(days);
+
+        if (isSameMonth(displayedMonth, selectedDate)) {
+            int position = selectedDate.getJewishDayOfMonth() + startDayOffset - 1;
+            adapter.setSelectedPosition(position);
+        } else {
+            adapter.setSelectedPosition(-1);
+        }
     }
 
-    private void updateDayPicker(NumberPicker dayPicker, int year, int month) {
-        JewishCalendar tempCal = new JewishCalendar(year, month, 1);
-        int maxDays = tempCal.getDaysInJewishMonth();
+    /**
+     * Creates an ordered list of month constants for a given Hebrew year.
+     * @param year The Hebrew year.
+     * @return A List of integers representing the months in their correct sequence.
+     */
+    private List<Integer> getMonthListForYear(int year) {
+        JewishCalendar tempCal = new JewishCalendar(year, JewishCalendar.TISHREI, 1);
+        if (tempCal.isJewishLeapYear()) {
+            return Arrays.asList(
+                    JewishCalendar.TISHREI, JewishCalendar.CHESHVAN, JewishCalendar.KISLEV,
+                    JewishCalendar.TEVES, JewishCalendar.SHEVAT, JewishCalendar.ADAR,
+                    JewishCalendar.ADAR_II, JewishCalendar.NISSAN, JewishCalendar.IYAR,
+                    JewishCalendar.SIVAN, JewishCalendar.TAMMUZ, JewishCalendar.AV, JewishCalendar.ELUL
+            );
+        } else {
+            return Arrays.asList(
+                    JewishCalendar.TISHREI, JewishCalendar.CHESHVAN, JewishCalendar.KISLEV,
+                    JewishCalendar.TEVES, JewishCalendar.SHEVAT, JewishCalendar.ADAR,
+                    JewishCalendar.NISSAN, JewishCalendar.IYAR, JewishCalendar.SIVAN,
+                    JewishCalendar.TAMMUZ, JewishCalendar.AV, JewishCalendar.ELUL
+            );
+        }
+    }
 
-        int currentDay = dayPicker.getValue();
-        if (currentDay > maxDays) {
-            dayPicker.setValue(maxDays);
+    /**
+     * Changes the displayed month using a robust, list-based approach to handle all edge cases.
+     * @param monthDifference -1 for previous, 1 for next.
+     */
+    private void changeMonth(int monthDifference) {
+        int currentYear = displayedMonth.getJewishYear();
+        int currentMonth = displayedMonth.getJewishMonth();
+
+        List<Integer> monthList = getMonthListForYear(currentYear);
+        int currentIndex = monthList.indexOf(currentMonth);
+        int newIndex = currentIndex + monthDifference;
+
+        int newYear = currentYear;
+        int newMonth;
+
+        if (newIndex < 0) { // Moved to the previous year
+            newYear--;
+            List<Integer> prevYearMonthList = getMonthListForYear(newYear);
+            newMonth = prevYearMonthList.get(prevYearMonthList.size() - 1); // Last month of previous year
+        } else if (newIndex >= monthList.size()) { // Moved to the next year
+            newYear++;
+            newMonth = JewishCalendar.TISHREI; // First month of next year
+        } else { // Moved within the same year
+            newMonth = monthList.get(newIndex);
         }
 
-        dayPicker.setMinValue(1);
-        dayPicker.setMaxValue(maxDays);
+        displayedMonth.setJewishDate(newYear, newMonth, 1);
+        updateCalendar();
+    }
+
+    /**
+     * Changes the displayed year, ensuring month validity (e.g., Adar II).
+     * @param yearDifference -1 for previous, 1 for next.
+     */
+    private void changeYear(int yearDifference) {
+        int newYear = displayedMonth.getJewishYear() + yearDifference;
+        int currentMonth = displayedMonth.getJewishMonth();
+
+        // If the current month is Adar II and the target year is not a leap year,
+        // fall back to the regular Adar.
+        if (currentMonth == JewishCalendar.ADAR_II) {
+            JewishCalendar tempCal = new JewishCalendar(newYear, JewishCalendar.TISHREI, 1);
+            if (!tempCal.isJewishLeapYear()) {
+                currentMonth = JewishCalendar.ADAR;
+            }
+        }
+
+        displayedMonth.setJewishDate(newYear, currentMonth, 1);
+        updateCalendar();
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        int day = position - startDayOffset + 1;
+        if (day < 1) return;
+
+        selectedDate.setJewishDate(
+                displayedMonth.getJewishYear(),
+                displayedMonth.getJewishMonth(),
+                day
+        );
+
+        adapter.setSelectedPosition(position);
+    }
+
+    private boolean isSameMonth(JewishCalendar a, JewishCalendar b) {
+        if (a == null || b == null) return false;
+        return a.getJewishYear() == b.getJewishYear() &&
+                a.getJewishMonth() == b.getJewishMonth();
     }
 }

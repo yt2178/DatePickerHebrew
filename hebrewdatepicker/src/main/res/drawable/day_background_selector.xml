@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- State when the item is selected -->
+    <item android:state_selected="true"
+        android:drawable="@drawable/day_selected_background" />
+    <!-- Default, unselected state -->
+    <item android:drawable="@android:color/transparent" />
+</selector>
