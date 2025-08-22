@@ -9,6 +9,12 @@ A simple, modern, and highly customizable Hebrew Date Picker dialog for Android 
 
 ![HebrewDatePicker Screenshot](https://github.com/user-attachments/assets/7c99aeed-c33a-4113-8f88-9d65d6bbd6bc)![HebrewDatePicker Screenshot](https://github.com/yt2178/DatePickerHebrew/blob/master/screenshot.png)
 
+### **updated 👇 1.0.4**
+
+<img width="480" height="854" alt="image" src="https://github.com/user-attachments/assets/72903b54-5ef7-4b68-92e9-931a0d95fb94" />
+
+
+
 
 ## Features
 
@@ -91,7 +97,7 @@ button.setOnClickListener(v -> {
     dialog.show(getSupportFragmentManager(), "HebrewDatePickerDialog");
 });
 ```
-NEW NEW NEW!!!
+## NEW NEW NEW!!!
 Customization (Advanced Usage)
 You can chain methods on the Builder to customize the dialog's behavior.
 Example: Disable past dates and holidays
