@@ -34,7 +34,7 @@ import java.util.Locale;
 import java.util.Map;
 
 public class HebrewDatePickerDialog extends DialogFragment implements CalendarAdapter.OnItemListener {
-    private boolean disablePastDates = true;
+    private boolean disablePastDates = false;
     private boolean disableHolidaysAndShabbat = false;
 
     private OnDateSetListener listener;

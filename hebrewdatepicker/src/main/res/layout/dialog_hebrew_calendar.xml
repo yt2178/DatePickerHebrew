@@ -20,7 +20,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingVertical="12dp"
+            android:paddingVertical="10dp"
             android:paddingHorizontal="16dp">
 
             <ImageView
@@ -139,7 +139,7 @@
                 android:id="@+id/calendar_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="6dp"
+                android:padding="5dp"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="7"
                 tools:listitem="@layout/calendar_day_item" />
@@ -152,7 +152,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="end"
-        android:padding="16dp">
+        android:padding="14dp">
 
         <Button
             android:id="@+id/btn_jump_to_date"
