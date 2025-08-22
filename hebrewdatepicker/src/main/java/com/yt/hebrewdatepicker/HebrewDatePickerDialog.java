@@ -142,7 +142,6 @@ public class HebrewDatePickerDialog extends DialogFragment implements CalendarAd
             dismiss();
         });
         cancelButton.setOnClickListener(v -> dismiss());
-
         updateCalendar();
         return dialog;
     }
