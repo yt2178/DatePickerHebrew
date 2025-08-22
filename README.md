@@ -5,22 +5,26 @@
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![JitPack](https://jitpack.io/v/yt2178/DatePickerHebrew.svg)](https://jitpack.io/#yt2178/DatePickerHebrew)
 
-A simple and modern Hebrew Date Picker dialog for Android applications, built with Material Design principles. The library provides a calendar-style view that is intuitive and easy to integrate.
+A simple, modern, and highly customizable Hebrew Date Picker dialog for Android applications. Built with Material Design principles, this library provides an intuitive calendar-style view for Hebrew date selection.
 
 ![HebrewDatePicker Screenshot](https://github.com/user-attachments/assets/7c99aeed-c33a-4113-8f88-9d65d6bbd6bc)![HebrewDatePicker Screenshot](https://github.com/yt2178/DatePickerHebrew/blob/master/screenshot.png)
 
 
-
-
-
-
 ## Features
 
-- **Full Hebrew Calendar:** Displays a grid-based calendar view for any Hebrew month and year.
-- **Easy Navigation:** Quickly navigate between months and years.
-- **Gematria Display:** All years and days are displayed in their traditional Gematria format.
-- **Customizable:** Built as a `DialogFragment` for easy integration and management by the Android framework.
-- **Lightweight:** Depends only on `Zmanim (KosherJava)` and AndroidX libraries.
+-   **Full Hebrew Calendar:** Displays a grid-based calendar view for any Hebrew month and year.
+-   **Intuitive Navigation:**
+    -   Quickly navigate between months and years with arrow buttons.
+    -   Click on the month or year title to open a selection list for rapid navigation.
+    -   Use the "Jump to Date" feature with predictive text to find any date in a 50-year range.
+-   **Highly Customizable:**
+    -   Disable selection of past dates.
+    -   Disable selection of Shabbat and Jewish holidays/fasts.
+-   **Gematria Display:** All years and days are displayed in their traditional Gematria format.
+-   **Easy Integration:** Built as a `DialogFragment` and distributed via JitPack for simple, plug-and-play usage.
+-   **Lightweight:** Depends only on `Zmanim (KosherJava)` and standard AndroidX libraries.
+
+
 
 ## Installation
 
@@ -48,7 +52,7 @@ Add the dependency to your app's `build.gradle.kts` (or `build.gradle`) file.
 ```kotlin
 // app/build.gradle.kts
 dependencies {
-    implementation("com.github.yt2178:DatePickerHebrew:1.0.3")
+    implementation("com.github.yt2178:DatePickerHebrew:1.0.4")
 }
 ```
 
@@ -87,9 +91,31 @@ button.setOnClickListener(v -> {
     dialog.show(getSupportFragmentManager(), "HebrewDatePickerDialog");
 });
 ```
+NEW NEW NEW!!!
+Customization (Advanced Usage)
+You can chain methods on the Builder to customize the dialog's behavior.
+Example: Disable past dates and holidays
+This is useful for booking or scheduling applications where users should only select future, available dates.
+```Java
+button.setOnClickListener(v -> {
+    new HebrewDatePickerDialog.Builder()
+        .setDisablePastDates(true)
+        .setDisableHolidaysAndShabbat(true)
+        .setOnDateSetListener(this)
+        .build()
+        .show(getSupportFragmentManager(), "HebrewDatePickerDialog");
+});
+```
+When `setDisablePastDates(true)` is used:
+-   Past days in the calendar will be grayed out and unselectable.
+-   The back-navigation buttons will be hidden when viewing the current month.
+-   The month, year, and "Jump to Date" selection lists will only show future options.
 
-That's it! The dialog will be displayed, and the `onDateSet` method will be called when the user confirms a date.
 
+When setDisableHolidaysAndShabbat(true) is used:
+-   All Shabbatot, Jewish holidays (Yom Tov), and fast days (Taanit) will be grayed out and unselectable.
+
+---
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
