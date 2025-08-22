@@ -19,11 +19,11 @@
             android:layout_marginBottom="16dp"/>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
-            <!-- ודא שהנתיב המלא כאן נכון לשם החבילה שלך -->
             <com.yt.hebrewdatepicker.CustomAutoCompleteTextView
                 android:id="@+id/actv_month_year"
                 android:layout_width="match_parent"
@@ -33,6 +33,15 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-    </LinearLayout>
+        <!-- Error Message TextView (initially hidden) -->
+        <TextView
+            android:id="@+id/tv_error_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="אנא בחר תאריך חוקי מהרשימה"
+            android:textColor="@android:color/holo_red_dark"
+            android:visibility="gone"
+            android:layout_marginTop="8dp"/>
 
+    </LinearLayout>
 </ScrollView>
