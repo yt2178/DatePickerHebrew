@@ -4,53 +4,70 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="?android:attr/colorBackground">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="16dp"
-        android:paddingBottom="8dp">
-
-        <ImageView
-            android:id="@+id/btn_prev_year"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/outline_keyboard_double_arrow_left_24"
-            app:tint="?attr/colorPrimary"
-            android:contentDescription="@string/prev_year"/>
-
-        <TextView
-            android:id="@+id/tv_year"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:textAppearance="?attr/textAppearanceTitleLarge"
-            android:textStyle="bold"
-            tools:text="ה'תשפ'ד" />
-
-        <ImageView
-            android:id="@+id/btn_next_year"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/outline_keyboard_double_arrow_right_24"
-            app:tint="?attr/colorPrimary"
-            android:contentDescription="@string/next_year"/>
-    </RelativeLayout>
-
-    <!-- Month Navigation and Calendar Grid in a Card -->
+    <!-- Year Header in Card -->
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="2dp"
+        app:strokeColor="?attr/colorOutline"
+        app:strokeWidth="1dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="12dp"
+            android:paddingHorizontal="16dp">
+
+            <ImageView
+                android:id="@+id/btn_prev_year"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/outline_keyboard_double_arrow_left_24"
+                app:tint="?attr/colorPrimary"
+                android:contentDescription="@string/prev_year" />
+
+            <TextView
+                android:id="@+id/tv_year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="?attr/selectableItemBackground"
+                android:padding="8dp"
+                android:textAppearance="?attr/textAppearanceTitleLarge"
+                android:textStyle="bold"
+                tools:text="שנה" />
+
+            <ImageView
+                android:id="@+id/btn_next_year"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/outline_keyboard_double_arrow_right_24"
+                app:tint="?attr/colorPrimary"
+                android:contentDescription="@string/next_year" />
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Calendar Card -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="4dp"
         app:cardCornerRadius="16dp"
         app:cardElevation="4dp"
-        android:layout_margin="8dp">
+        app:strokeColor="?attr/colorOutline"
+        app:strokeWidth="1dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -66,53 +83,55 @@
 
                 <ImageView
                     android:id="@+id/btn_prev_month"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/outline_keyboard_arrow_left_24"
                     app:tint="?attr/colorOnPrimaryContainer"
-                    android:contentDescription="@string/prev_month"/>
+                    android:contentDescription="@string/prev_month" />
 
                 <TextView
                     android:id="@+id/tv_month"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:padding="8dp"
                     android:textAppearance="?attr/textAppearanceTitleMedium"
                     android:textColor="?attr/colorOnPrimaryContainer"
-                    tools:text="אלול" />
+                    tools:text="חודש" />
 
                 <ImageView
                     android:id="@+id/btn_next_month"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/outline_keyboard_arrow_right_24"
                     app:tint="?attr/colorOnPrimaryContainer"
-                    android:contentDescription="@string/next_month"/>
+                    android:contentDescription="@string/next_month" />
             </RelativeLayout>
 
-            <!-- Day of the Week Labels (Styled) -->
+            <!-- Days of the Week -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:gravity="center"
                 android:paddingTop="12dp"
                 android:paddingBottom="4dp"
-                android:paddingStart="4dp"
-                android:paddingEnd="4dp">
+                android:paddingHorizontal="8dp">
 
-                <TextView style="@style/DayOfWeekLabel" android:text="א"/>
-                <TextView style="@style/DayOfWeekLabel" android:text="ב"/>
-                <TextView style="@style/DayOfWeekLabel" android:text="ג"/>
-                <TextView style="@style/DayOfWeekLabel" android:text="ד"/>
-                <TextView style="@style/DayOfWeekLabel" android:text="ה"/>
-                <TextView style="@style/DayOfWeekLabel" android:text="ו"/>
-                <TextView style="@style/DayOfWeekLabel.Shabbat" android:text="ש"/>
+                <TextView style="@style/DayOfWeekLabel" android:text="א" />
+                <TextView style="@style/DayOfWeekLabel" android:text="ב" />
+                <TextView style="@style/DayOfWeekLabel" android:text="ג" />
+                <TextView style="@style/DayOfWeekLabel" android:text="ד" />
+                <TextView style="@style/DayOfWeekLabel" android:text="ה" />
+                <TextView style="@style/DayOfWeekLabel" android:text="ו" />
+                <TextView style="@style/DayOfWeekLabel.Shabbat" android:text="ש" />
             </LinearLayout>
 
             <!-- Calendar Grid -->
@@ -120,12 +139,46 @@
                 android:id="@+id/calendar_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="4dp"
+                android:padding="6dp"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="7"
                 tools:listitem="@layout/calendar_day_item" />
-
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
+    <!-- Action Buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end"
+        android:padding="16dp">
+
+        <Button
+            android:id="@+id/btn_jump_to_date"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="קפיצה לתאריך" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btn_cancel"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="ביטול" />
+
+        <Button
+            android:id="@+id/btn_ok"
+            style="@style/Widget.Material3.Button.UnelevatedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="אישור" />
+    </LinearLayout>
 </LinearLayout>

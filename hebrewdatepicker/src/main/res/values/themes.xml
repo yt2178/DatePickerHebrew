@@ -2,11 +2,14 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.Hebrew" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/dark_brown</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimaryContainer">@color/brown</item>
+        <item name="colorOnPrimaryContainer">@color/white</item>
     </style>
     <!-- res/values/styles.xml -->
     <style name="NumberPickerTextColorStyle">
-        <item name="android:textColorPrimary">@color/black</item>
+        <item name="android:textColorPrimary">@color/dark_brown</item>
     </style>
     <style name="DayOfWeekLabel" parent="Widget.AppCompat.TextView">
         <item name="android:layout_width">0dp</item>

@@ -1,8 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="colorAccent">#40B44B32</color>
-    day_text_color_selector
-    <color name="day_text_color_selector">#59230F</color>
+    <color name="transparent">#00FFFFFF</color>
+    <color name="semi_transparent">#49FFFFFF</color>
+    <color name="brown">#A04123</color><!-- חום -->
+    <color name="dark_brown">#59230F</color><!-- חום כהה -->
+    <color name="semi_brown">#80B44B32</color><!-- חצי שקוף חום -->
+    <color name="third_brown">#54B44B32</color><!-- שתי שליש שקוף חום -->
+    <color name="quarter_brown">#40B44B32</color><!-- שלושת רבעי שקוף חום -->
+    <color name="colorLightStatusBar">#A04123</color>
+    <color name="colorDarkStatusBar">#A04123</color>
 </resources>
