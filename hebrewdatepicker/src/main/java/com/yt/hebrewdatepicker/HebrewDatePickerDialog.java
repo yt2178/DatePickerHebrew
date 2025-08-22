@@ -531,7 +531,6 @@ public class HebrewDatePickerDialog extends DialogFragment implements CalendarAd
             }
             return false;
         });
-
         dialog.setOnDismissListener(dialogInterface -> {
             autoCompleteTextView.clearFocus();
             if (autoCompleteTextView.isPopupShowing()) {
