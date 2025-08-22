@@ -7,7 +7,11 @@
 
 A simple and modern Hebrew Date Picker dialog for Android applications, built with Material Design principles. The library provides a calendar-style view that is intuitive and easy to integrate.
 
-![HebrewDatePicker Screenshot](https://github.com/yt2178/DatePickerHebrew/blob/master/screenshot.png)
+![HebrewDatePicker Screenshot](https://github.com/user-attachments/assets/7c99aeed-c33a-4113-8f88-9d65d6bbd6bc)![HebrewDatePicker Screenshot](https://github.com/yt2178/DatePickerHebrew/blob/master/screenshot.png)
+
+
+
+
 
 
 ## Features
@@ -44,7 +48,7 @@ Add the dependency to your app's `build.gradle.kts` (or `build.gradle`) file.
 ```kotlin
 // app/build.gradle.kts
 dependencies {
-    implementation("com.github.yt2178:DatePickerHebrew:1.0.1")
+    implementation("com.github.yt2178:DatePickerHebrew:1.0.3")
 }
 ```
 
@@ -57,19 +61,19 @@ Using the `HebrewDatePickerDialog` is straightforward. Your `Activity` or `Fragm
 **1. Implement the listener:**
 ```java
 public class MainActivity extends AppCompatActivity implements HebrewDatePickerDialog.OnDateSetListener {
-    // ...
-    @Override
-    public void onDateSet(int year, int month, int day) {
-        // A date has been selected!
-        // The values are for the Hebrew calendar (e.g., year = 5785)
-        JewishCalendar selectedDate = new JewishCalendar(year, month, day);
+    
+    private TextView mySelectedDateTextView; // Example TextView
+    
+    // ... inside onCreate, find your TextView
+    // mySelectedDateTextView = findViewById(R.id.your_textview_id);
 
-        // You can format this date for display
-        HebrewDateFormatter hdf = new HebrewDateFormatter();
-        hdf.setHebrewFormat(true);
-        String formattedDate = hdf.format(selectedDate);
+    @Override
+    public void onDateSet(JewishCalendar selectedDate, String formattedDate) {
+        // A date has been selected!
+        // The dialog returns both the formatted string and the JewishCalendar object.
         
-        Toast.makeText(this, "Selected Date: " + formattedDate, Toast.LENGTH_LONG).show();
+        // Display the result directly in your TextView
+        mySelectedDateTextView.setText(formattedDate);
     }
 }
 ```
