@@ -298,14 +298,14 @@ public class HebrewDatePickerDialog extends DialogFragment implements CalendarAd
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 tvError.setVisibility(View.GONE);
-                tvInstructions.setText("הקלד חודש ושנה (למשל: אלול תשפד)");
+                tvInstructions.setText("הקלד חודש ושנה (למשל: אלול תשפה)");
             }
             @Override public void afterTextChanged(Editable s) {}
         });
 
         builder.setView(dialogView)
                 .setTitle("קפיצה לחודש ושנה")
-                .setPositiveButton("קפוץ", null)
+                .setPositiveButton("אישור", null)
                 .setNegativeButton("ביטול", null);
 
         AlertDialog dialog = builder.create();
@@ -340,7 +340,6 @@ public class HebrewDatePickerDialog extends DialogFragment implements CalendarAd
                     if (inputParts.length == 1 && sMonthMap.get(input) == null) {
                         int targetYear = jumpToDate.getJewishYear();
 
-                        // --- THIS IS THE CRITICAL FIX ---
                         List<String> monthsOfYear = new ArrayList<>();
                         Map<String, JewishCalendar> tempMap = new HashMap<>();
                         List<Integer> allMonthConstantsInYear = getMonthListForYear(targetYear);
@@ -359,7 +358,6 @@ public class HebrewDatePickerDialog extends DialogFragment implements CalendarAd
                             monthsOfYear.add(fullKey);
                             tempMap.put(fullKey, tempCal);
                         }
-                        // --- END OF FIX ---
 
                         Map<String, Integer> monthOrderMap = new HashMap<>();
                         monthOrderMap.put("תשרי", 1);
